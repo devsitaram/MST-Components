@@ -1,7 +1,5 @@
 package com.donation.fda.presentation.ui
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.material3.ButtonDefaults
@@ -42,15 +40,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.donation.fda.data.common.ClientInterceptors
 import com.donation.fda.presentation.ui.navigations.NavScreen
 import com.donation.fda.presentation.ui.util.ButtonView
 import com.donation.fda.presentation.ui.util.CanvasView
 import com.donation.fda.presentation.ui.util.CheckboxComponent
 import com.donation.fda.presentation.ui.util.DividerWithText
+import com.donation.fda.presentation.ui.util.ErrorMessageDialogBox
 import com.donation.fda.presentation.ui.util.InputTextFieldView
 import com.donation.fda.presentation.ui.util.LottieAnimationsView
-import com.donation.fda.presentation.ui.util.MessageDialogBox
 import com.donation.fda.presentation.ui.util.PasswordTextFieldView
 import com.donation.fda.presentation.ui.util.TextButtonView
 import com.donation.fda.presentation.ui.util.TextView
@@ -62,14 +59,11 @@ import com.donation.fda.theme.yellow
 import com.record.fda.R
 
 @Composable
-fun LoginViewScreen(userTypes: String?, navController: NavHostController) {
+fun LoginViewScreen(navController: NavHostController) {
 
     val context = LocalContext.current
 
-    val getSharedPreferences = ClientInterceptors(context)
-    val getUserType = getSharedPreferences.userTypes()
-
-    val users by remember { mutableStateOf(if (userTypes == null || userTypes == "{user_types}") getUserType else userTypes) }
+//    val getSharedPreferences = ClientInterceptors(context)
 
     var checkedState by remember { mutableStateOf(false) }
     var isInvalidUser by remember { mutableStateOf(false) }
@@ -122,22 +116,6 @@ fun LoginViewScreen(userTypes: String?, navController: NavHostController) {
         }
     }
 
-//    Box(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(top = 60.dp, end = 25.dp),
-//        contentAlignment = Alignment.TopEnd
-//    ) {
-//        Image(
-//            painter = painterResource(id = R.mipmap.img_profile),
-//            contentDescription = null,
-//            modifier = Modifier
-//                .size(90.dp)
-//                .clip(CircleShape)  // Clip the image into a circle
-//
-//        )
-//    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -171,38 +149,6 @@ fun LoginViewScreen(userTypes: String?, navController: NavHostController) {
 
             )
         }
-//        Column {
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(start = 15.dp,top=15.dp)
-//            ) {
-//                TextView(
-//                    text = "Sign in to your \account!",
-//                    color = Color.DarkGray,
-//                    fontSize = 20.sp,
-//                    fontWeight = FontWeight.SemiBold,
-//                    lineHeight = 25.sp,
-//                    textAlign = TextAlign.Center,
-//                )
-//            }
-//
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(end = 15.dp),
-//                horizontalArrangement = Arrangement.End
-//            ) {
-//                Image(
-//                    painter = painterResource(id = R.mipmap.img_profile),
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .size(90.dp)
-//                        .clip(CircleShape)  // Clip the image into a circle
-//
-//                )
-//            }
-//        }
 
         Column(
             modifier = Modifier
@@ -221,8 +167,8 @@ fun LoginViewScreen(userTypes: String?, navController: NavHostController) {
 
             }
             TextView(
-                text = if (checkedState) "You login with ${users.toString()} account" else "Enter the valid email and password",
-                fontSize = 14.sp,
+                text = "Enter the valid email and password",
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Normal,
                 fontStyle = FontStyle.Normal,
                 modifier = Modifier.padding(bottom = 10.dp)
@@ -335,7 +281,7 @@ fun LoginViewScreen(userTypes: String?, navController: NavHostController) {
     }
 
     if (isInvalidUser) {
-        MessageDialogBox(
+        ErrorMessageDialogBox(
             title = "Error",
             descriptions = "Your username or password is invalid. Please try to again or click on Forgot Your Password? below.",
             onDismiss = {
