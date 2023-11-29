@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
@@ -97,6 +98,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.donation.fda.theme.pink
 import com.donation.fda.theme.primaryColor
+import com.donation.fda.theme.red
 import com.donation.fda.theme.white
 import com.record.fda.R
 
@@ -347,7 +349,7 @@ fun PasswordTextFieldView(
             ) {
                 VectorIconView(
                     imageVector = if (passwordVisibility.value) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                    tint = if (isEmptyValue || isError) Color.Red else primaryColor
+                    tint = if (isEmptyValue || isError) red else primaryColor
                 )
             }
         },
@@ -872,5 +874,86 @@ fun LottieAnimationsView(
         composition = compositionResult.value,
         progress = progress,
         modifier = modifier
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopButtonAppBar(title: String) {
+    TopAppBar(
+        title = { TextView(text = title) },
+        navigationIcon = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, start = 8.dp, end = 8.dp)
+                    .width(IntrinsicSize.Min),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                PainterImageView(
+                    painter = painterResource(id = R.mipmap.img_app_logo),
+                    modifier = Modifier.size(40.dp),
+                    contentDescription = null
+                )
+                TextView(
+                    text = title,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(start = 5.dp)
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    // search icon
+                    /**navController.navigate(ScreenList.SearchScreen.route)*/
+                    VectorIconView(
+                        imageVector = Icons.Default.Search,
+                        tint = Color.Gray,
+                        modifier = Modifier
+                            .size(30.dp)
+                            .clickable { /**navController.navigate(ScreenList.SearchScreen.route)*/ },
+                    )
+                    // notification icon
+                    IconButton(
+                        onClick = { /**navController.navigate(ScreenList.Notification.route)*/ },
+                        modifier = Modifier
+                    ) {
+                        BottomNavigationItem(
+                            icon = {
+                                BadgedBox(
+                                    badge = {
+                                        Badge(backgroundColor = pink, contentColor = white) {
+                                            TextView(
+                                                text = "3",
+                                                style = TextStyle(
+                                                    color = white,
+                                                    fontSize = 12.sp,
+                                                    fontWeight = FontWeight.Normal
+                                                ),
+                                                modifier = Modifier
+                                            )
+                                        }
+                                    }
+                                ) {
+                                    VectorIconView(
+                                        Icons.Filled.Notifications,
+                                        contentDescription = "Notification",
+                                        tint = Color.Gray
+                                    )
+                                }
+                            },
+                            selected = false,
+                            onClick = { },
+                            modifier = Modifier,
+                        )
+                    }
+                }
+            }
+        },
+        modifier = Modifier
+            .shadow(5.dp)
+            .height(56.dp)
+            .fillMaxWidth(),
     )
 }

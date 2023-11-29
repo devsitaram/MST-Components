@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -54,6 +55,7 @@ import com.donation.fda.presentation.ui.util.TextView
 import com.donation.fda.presentation.ui.util.VectorIconView
 import com.donation.fda.theme.orange
 import com.donation.fda.theme.primaryColor
+import com.donation.fda.theme.red
 import com.donation.fda.theme.white
 import com.donation.fda.theme.yellow
 import com.record.fda.R
@@ -77,24 +79,52 @@ fun LoginViewScreen(navController: NavHostController) {
     val isPasswordEmpty by remember { derivedStateOf { password.isEmpty() } }
 
     val onClickLogin: () -> Unit = {
-        emailEmptyValue = isEmailEmpty
-        passwordEmptyValue = isPasswordEmpty
-        if (!isEmailEmpty && !isPasswordEmpty) {
-
+        navController.navigate(NavScreen.DashboardPage.route){
+            popUpTo(NavScreen.LoginPage.route){
+                inclusive = true
+            }
+        }
 //            // call viewmodel function
-//            LogInViewModel.getLoginUserAuth(email, password)
-//            if (userLoginResult.data?.success == true) {
-//                navController.navigate(NavScreen.DashboardPage.route) {
-//                    popUpTo(NavScreen.LoginPage.route) {
-//                        inclusive = true
-//                        val editor = sharedPreferences.edit()
-//                        editor.putString("accessToken", "${userLoginResult.data.result?.accessToken}").apply()
+//        LogInViewModel.getLoginUserAuth(email, password)
+//        if (userLoginResult.data?.success == true) {
+//            when (userLoginResult.data?.roll) {
+//                "Donor" -> {
+//                    // navigate the Donor dashboard
+//                    navController.navigate(NavScreen.DashboardPage.route) {
+//                        popUpTo(NavScreen.LoginPage.route) {
+//                            inclusive = true
+//                            val editor = sharedPreferences.edit()
+//                            editor.putString("accessToken", "${userLoginResult.data.result?.accessToken}").apply()
+//                        }
 //                    }
 //                }
-//            } else {
-//                isInvalidUser = true
+//
+//                "Volunteer", "Farmer" -> {
+//                    // navigate the Volunteer and Farmer dashboard
+//                    // navigate the Donor dashboard
+//                    navController.navigate(NavScreen.DashboardPage.route) {
+//                        popUpTo(NavScreen.LoginPage.route) {
+//                            inclusive = true
+//                            val editor = sharedPreferences.edit()
+//                            editor.putString("accessToken", "${userLoginResult.data.result?.accessToken}").apply()
+//                        }
+//                    }
+//                }
+//
+//                "NGO" -> {
+//                    // navigate the NGO dashboard
+//                    navController.navigate(NavScreen.DashboardPage.route) {
+//                        popUpTo(NavScreen.LoginPage.route) {
+//                            inclusive = true
+//                            val editor = sharedPreferences.edit()
+//                            editor.putString("accessToken", "${userLoginResult.data.result?.accessToken}").apply()
+//                        }
+//                    }
+//                }
 //            }
-        }
+//        } else {
+//            isInvalidUser = true
+//        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -132,16 +162,16 @@ fun LoginViewScreen(navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             TextView(
-                    text = "Sign in to your \naccount!",
-                    color = Color.DarkGray,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    lineHeight = 25.sp,
-                    textAlign = TextAlign.Center,
-                )
+                text = "Sign in to your \naccount!",
+                color = Color.DarkGray,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold,
+                lineHeight = 25.sp,
+                textAlign = TextAlign.Center,
+            )
 
             Image(
-                    painter = painterResource(id = R.mipmap.img_profile),
+                painter = painterResource(id = R.mipmap.img_profile),
                 contentDescription = null,
                 modifier = Modifier
                     .size(90.dp)
@@ -156,16 +186,16 @@ fun LoginViewScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            var isAnimating by remember { mutableStateOf(true) }
-            if (isAnimating) {
+//            val isAnimating by remember { mutableStateOf(true) }
+//            if (isAnimating) {
                 LottieAnimationsView(
                     rawResource = R.raw.login_animation,
-                    isAnimating = isAnimating,
+                    isAnimating = true, // isAnimating
                     speed = 0.75f,
                     modifier = Modifier.size(200.dp)
                 )
 
-            }
+//            }
             TextView(
                 text = "Enter the valid email and password",
                 fontSize = 16.sp,
@@ -182,7 +212,7 @@ fun LoginViewScreen(navController: NavHostController) {
             label = "Email",
             placeholder = "Enter email",
             isEmptyValue = emailEmptyValue,
-            errorColor = Color.Red,
+            errorColor = red,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
@@ -195,7 +225,7 @@ fun LoginViewScreen(navController: NavHostController) {
             label = "Password",
             placeholder = "Enter password",
             isEmptyValue = passwordEmptyValue,
-            errorColor = Color.Red,
+            errorColor = red,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
@@ -221,7 +251,11 @@ fun LoginViewScreen(navController: NavHostController) {
 
         ButtonView(
             onClick = {
-                onClickLogin()
+                emailEmptyValue = isEmailEmpty
+                passwordEmptyValue = isPasswordEmpty
+                if (!isEmailEmpty && !isPasswordEmpty) {
+                    onClickLogin()
+                }
             },
             text = "Log In",
             colors = ButtonDefaults.buttonColors(
@@ -288,7 +322,7 @@ fun LoginViewScreen(navController: NavHostController) {
                 isInvalidUser = false
             },
             btnText = "Okay",
-            color = Color.Red
+            color = red
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.donation.fda.presentation.ui.passord
+package com.donation.fda.presentation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.donation.fda.presentation.ui.navigations.NavScreen
 import com.donation.fda.presentation.ui.util.ErrorMessageDialogBox
 import com.donation.fda.presentation.ui.util.ImageViewPainter
 import com.donation.fda.presentation.ui.util.InputTextFieldView
@@ -130,7 +131,7 @@ fun ForgotPasswordViewScreen(navController: NavHostController) {
                     isEmptyValue = emailEmptyValue,
                     errorValue = emailErrorValue,
                     invalidMessage = "Enter the valid email address",
-                    errorColor = Color.Red,
+                    errorColor = red,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -243,7 +244,7 @@ fun ForgotPasswordViewScreen(navController: NavHostController) {
                     label = "New",
                     placeholder = "New password",
                     isEmptyValue = newPasswordEmptyValue,
-                    errorColor = Color.Red,
+                    errorColor = red,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
@@ -255,7 +256,7 @@ fun ForgotPasswordViewScreen(navController: NavHostController) {
                     label = "Confirm",
                     placeholder = "Confirm password",
                     isEmptyValue = confirmPasswordEmptyValue,
-                    errorColor = Color.Red,
+                    errorColor = red,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
@@ -290,7 +291,11 @@ fun ForgotPasswordViewScreen(navController: NavHostController) {
             descriptions = "Your update has been confirmed. Check your login details.",
             onDismiss = {
                 isUpdate = false
-                navController.navigateUp()
+                navController.navigate(NavScreen.LoginPage.route){
+                    popUpTo(NavScreen.ForgotPasswordPage.route){
+                        inclusive = true
+                    }
+                }
             },
             btnText = "Okay",
             color = green

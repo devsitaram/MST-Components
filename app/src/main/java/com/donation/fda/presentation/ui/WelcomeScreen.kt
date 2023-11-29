@@ -47,6 +47,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.donation.fda.presentation.ui.util.ButtonView
 import com.donation.fda.presentation.ui.util.TextView
@@ -56,29 +57,29 @@ import com.donation.fda.theme.white
 import com.record.fda.R
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun WelcomeViewScreen(navController: NavHostController) {
 
     val context = LocalContext.current
-
     // sharedPreferences
-    val sharedPreferences = context.getSharedPreferences("food_donation_preferences", Context.MODE_PRIVATE)
-    val editor = sharedPreferences.edit()
-    editor.putString("installToken", "success").apply()
+//    val sharedPreferences =
+//        context.getSharedPreferences("food_donation_preferences", Context.MODE_PRIVATE)
+//    val editor = sharedPreferences.edit()
+//    editor.putString("installToken", "success").apply()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(white)
-            .padding(8.dp), verticalArrangement = Arrangement.Top
+            .padding(8.dp), verticalArrangement = Arrangement.Center
     ) {
+
         Image(
-            painter = painterResource(R.mipmap.img_profile),
+            painter = painterResource(R.mipmap.img_app_logo),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(60.dp)
+                .padding(horizontal = 60.dp)
         )
 
         TextView(
@@ -108,28 +109,47 @@ fun WelcomeViewScreen(navController: NavHostController) {
         ) {
 
             ButtonView(
-                onClick = { navController.navigate(NavScreen.LoginPage.route) },
+                onClick = {
+                    navController.navigate(NavScreen.LoginPage.route){
+                        popUpTo(NavScreen.WelcomePage.route){
+                            inclusive = true
+                        }
+                    }
+                },
                 text = "Sign In",
                 colors = ButtonDefaults.buttonColors(
                     containerColor = primaryColor,
                 ),
-                textStyle = TextStyle(color = white, fontWeight = FontWeight.SemiBold),
+                textStyle = TextStyle(
+                    color = white,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp)
+                    .height(45.dp)
             )
-            Spacer(modifier = Modifier.padding(5.dp))
+            Spacer(modifier = Modifier.padding(8.dp))
             ButtonView(
-                onClick = { navController.navigate(NavScreen.RegisterPage.route) },
+                onClick = {
+                    navController.navigate(NavScreen.RegisterPage.route){
+                        popUpTo(NavScreen.WelcomePage.route){
+                            inclusive = true
+                        }
+                    }
+                },
                 text = "Sign Up",
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Unspecified,
                 ),
-                textStyle = TextStyle(color = primaryColor, fontWeight = FontWeight.SemiBold),
+                textStyle = TextStyle(
+                    color = primaryColor,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(1.dp, color = primaryColor, shape = CircleShape)
-                    .height(40.dp)
             )
         }
     }

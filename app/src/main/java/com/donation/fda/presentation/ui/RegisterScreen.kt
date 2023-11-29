@@ -82,6 +82,7 @@ import com.donation.fda.presentation.ui.util.TextView
 import com.donation.fda.presentation.ui.util.ImageViewPainter
 import com.donation.fda.presentation.ui.util.VectorIconView
 import com.donation.fda.theme.primaryColor
+import com.donation.fda.theme.red
 import com.donation.fda.theme.white
 import com.record.fda.R
 import kotlinx.coroutines.launch
@@ -254,20 +255,15 @@ fun RegisterView(
 
     var password by remember { mutableStateOf("") }
     var passwordEmptyValue by remember { mutableStateOf(false) }
-    val isPasswordEmpty by remember {
-        derivedStateOf {
-            password.isEmpty()
-        }
-    }
+    val isPasswordEmpty by remember { derivedStateOf { password.isEmpty() } }
+
+    val roll by remember { mutableStateOf(userRoll) }
+    var rollEmptyValue by remember { mutableStateOf(false) }
+    val isRollEmpty by remember { derivedStateOf { roll.isEmpty() } }
 
     // register button onClickAction
     val registerOnClick = {
-        nameEmptyValue = isNameEmpty // name error message
-        emailEmptyValue = isEmailEmpty // email error message
-        passwordEmptyValue = isPasswordEmpty // password error message
-
-        if (!isNameEmpty && !isEmailEmpty && !isPasswordEmpty) {
-//            val isSuccess = registerViewModel.registerDetails(name, email, password, userRoll, context)
+//            val isSuccess = registerViewModel.registerDetails(name, email, password, roll, context)
 //            if (isSuccess) {
 //                Toast.makeText(context, "Register success", Toast.LENGTH_SHORT).show()
 //                navController.navigate(NavScreen.LoginPage.route) // navigate
@@ -275,7 +271,6 @@ fun RegisterView(
 //            } else {
 //                emailErrorMessage = true
 //            }
-        }
     }
 
     Column(
@@ -320,7 +315,7 @@ fun RegisterView(
             isEmptyValue = emailEmptyValue,
             errorValue = emailErrorValue,
             invalidMessage = "Enter the valid email address",
-            errorColor = Color.Red,
+            errorColor = red,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier
                 .fillMaxWidth()
@@ -335,7 +330,7 @@ fun RegisterView(
             isEmptyValue = nameEmptyValue,
             errorValue = nameErrorValue,
             invalidMessage = "Enter the valid username",
-            errorColor = Color.Red,
+            errorColor = red,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(5.dp)
@@ -347,51 +342,70 @@ fun RegisterView(
             label = "Password",
             placeholder = "Enter password",
             isEmptyValue = passwordEmptyValue,
-            errorColor = Color.Red,
+            errorColor = red,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(5.dp)
         )
-        OutlinedTextField(
-            value = userRoll,
-            onValueChange = { userRollOnChange(it) },
-            label = { TextView(text = "Roll") },
-            placeholder = { TextView(text = "Select your roll") },
-            readOnly = true,
-            trailingIcon = {
-                IconButton(
-                    onClick = { chooseOnClick() }
-                ) {
-                    Column(
-                        modifier = Modifier.wrapContentWidth(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp)) {
+            OutlinedTextField(
+                value = userRoll,
+                onValueChange = { userRollOnChange(it) },
+                label = { TextView(text = "Roll") },
+                placeholder = { TextView(text = "Select your roll") },
+                readOnly = true,
+                isError = rollEmptyValue,
+                trailingIcon = {
+                    IconButton(
+                        onClick = { chooseOnClick() }
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.ChangeCircle,
-                            contentDescription = null,
-                            tint = primaryColor
-                        )
-                        TextView(
-                            text = "Select",
-                            fontStyle = FontStyle.Normal,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal
-                        )
+                        Column(
+                            modifier = Modifier.wrapContentWidth(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ChangeCircle,
+                                contentDescription = null,
+                                tint = primaryColor
+                            )
+                            TextView(
+                                text = "Select",
+                                fontStyle = FontStyle.Normal,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                        }
                     }
-                }
-
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(5.dp)
-        )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+            TextView(
+                text = "The roll is empty!",
+                style = TextStyle(color = red, textAlign = TextAlign.Start),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp, top = 1.dp)
+            )
+        }
 
         Spacer(modifier = Modifier.padding(top = 30.dp))
         // register button
         ButtonView(
-            onClick = { registerOnClick() },
+            onClick = {
+                Toast.makeText(context, userRoll, Toast.LENGTH_SHORT).show()
+                nameEmptyValue = isNameEmpty // name error message
+                emailEmptyValue = isEmailEmpty // email error message
+                passwordEmptyValue = isPasswordEmpty // password error message
+                rollEmptyValue = isRollEmpty
+                if (!isNameEmpty && !isEmailEmpty && !isPasswordEmpty && !isRollEmpty) {
+                    registerOnClick()
+                }
+            },
             text = "Create My account",
             textStyle = TextStyle(
                 fontSize = 16.sp,

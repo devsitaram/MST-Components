@@ -1,16 +1,14 @@
 package com.donation.fda
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
 import com.donation.fda.data.common.ClientInterceptors
-import com.donation.fda.presentation.ui.navigations.NavigationViewScreen
+import com.donation.fda.presentation.ui.dashboard.volunteer_farmer.VolunteerBtnNavBarViewScreen
 import com.donation.fda.theme.FDATheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,9 +29,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    SampleView()
-                    val navController = rememberNavController()
-                    NavigationViewScreen(getInstallDevice, navController)
+                    VolunteerBtnNavBarViewScreen()
+//                    val navController = rememberNavController()
+//                    NavigationViewScreen(getInstallDevice, navController)
                 }
             }
         }
