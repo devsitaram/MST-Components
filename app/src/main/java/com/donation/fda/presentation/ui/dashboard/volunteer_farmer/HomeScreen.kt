@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.donation.fda.presentation.ui.util.TopButtonAppBar
+import com.donation.fda.presentation.ui.util.TopButtonAppBarView
 import com.donation.fda.theme.white
 
 @Composable
@@ -27,7 +27,7 @@ fun HomeViewScreenVolunteer(navController: NavHostController) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TopButtonAppBar("Home")
+        TopButtonAppBarView("Home")
         LazyColumn(
             content = {
                 items(30) {count ->

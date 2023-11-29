@@ -62,10 +62,10 @@ fun WelcomeViewScreen(navController: NavHostController) {
 
     val context = LocalContext.current
     // sharedPreferences
-//    val sharedPreferences =
-//        context.getSharedPreferences("food_donation_preferences", Context.MODE_PRIVATE)
-//    val editor = sharedPreferences.edit()
-//    editor.putString("installToken", "success").apply()
+    val sharedPreferences =
+        context.getSharedPreferences("food_donation_preferences", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putString("installToken", "success").apply()
 
     Column(
         modifier = Modifier

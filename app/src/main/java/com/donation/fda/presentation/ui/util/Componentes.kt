@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Badge
@@ -57,6 +60,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
@@ -95,6 +99,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.donation.fda.theme.black
+import com.donation.fda.theme.gray
 import com.donation.fda.theme.pink
 import com.donation.fda.theme.primaryColor
 import com.donation.fda.theme.red
@@ -817,6 +823,22 @@ fun ImageViewPainter(
 }
 
 @Composable
+fun CircularImageView(
+    painter: Painter,
+    contentDescription: String? = null,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier) {
+        PainterImageView(
+            painter = painter,
+            contentDescription = contentDescription,
+            modifier = Modifier.fillMaxSize(), // Fill the Box with the image
+            contentScale = ContentScale.Crop // Adjusts the scaling of the image
+        )
+    }
+}
+
+@Composable
 fun CanvasView(
     modifier: Modifier = Modifier,
     left: Float = 0f,
@@ -878,7 +900,7 @@ fun LottieAnimationsView(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopButtonAppBar(title: String) {
+fun TopButtonAppBarView(title: String) {
     TopAppBar(
         title = { TextView(text = title) },
         navigationIcon = {
@@ -954,5 +976,227 @@ fun TopButtonAppBar(title: String) {
             .shadow(5.dp)
             .height(56.dp)
             .fillMaxWidth(),
+    )
+}
+
+@Composable
+fun CardView(
+    image: Painter,
+    text: String,
+    description: String,
+    color: Color,
+) {
+    val transparentColor = color.copy(alpha = 0.10f) // Create a new color with 25% alpha
+    Card(
+        modifier = Modifier
+            .padding(4.dp)
+            .background(Color.Unspecified)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(transparentColor),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CircularImageView(
+                    painter = image, modifier = Modifier
+                        .size(50.dp)
+                        .clip(CircleShape)
+                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 10.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextView(
+                        text = text,
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = FontFamily.Default,
+                            color = primaryColor
+                        ),
+                        modifier = Modifier
+                    )
+                    TextView(
+                        text = description,
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Normal,
+                            lineHeight = 15.sp,
+                            color = black
+                        ),
+                        modifier = Modifier
+                    )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CardViewSingleTask(
+    imageVector: ImageVector,
+    text: String,
+    color: Color,
+    onClick: () -> Unit = {}
+) {
+    Card(onClick = onClick, modifier = Modifier.padding()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color.copy(alpha = 0.10f))
+                .padding(15.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(imageVector = imageVector, contentDescription = null)
+            TextView(
+                text = text,
+                style = TextStyle(
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = FontFamily.Default
+                ),
+                modifier = Modifier.padding(start = 10.dp)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CardViewMultiTask(
+    icon: ImageVector,
+    title: String,
+    description: String,
+    color: Color,
+    onClick: () -> Unit = {}
+) {
+    val transparentColor = color.copy(alpha = 0.10f) // Create a new color with 25% alpha
+    Card(
+        onClick = onClick,
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .background(Color.Unspecified)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(transparentColor)
+                .padding(20.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = icon, contentDescription = null, tint = color)
+                TextView(
+                    text = title,
+                    style = TextStyle(
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = FontFamily.Default,
+                        color = color
+                    ),
+                    modifier = Modifier.padding(start = 10.dp)
+                )
+            }
+            TextView(
+                text = description,
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    lineHeight = 20.sp,
+                    color = Color.DarkGray
+                ),
+                modifier = Modifier.padding(top = 10.dp)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ButtonAppBar(title: String, painter: Painter) {
+    TopAppBar(
+        title = { TextView(text = title) },
+        navigationIcon = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 5.dp, start = 10.dp, end = 10.dp)
+                    .width(IntrinsicSize.Min),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                PainterImageView(
+                    painter = painter,
+                    modifier = Modifier.size(40.dp),
+                    contentDescription = null
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TextView(
+                        text = title,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                    )
+                }
+            }
+        },
+        modifier = Modifier
+            .shadow(5.dp)
+            .height(56.dp)
+            .fillMaxWidth(),
+    )
+}
+
+@Composable
+fun ConfirmationDialogBox(
+    title: String,
+    text: String,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = {
+            TextView(
+                text = title,
+                fontSize = 16.sp,
+                color = black,
+                fontWeight = FontWeight.SemiBold
+            )
+        },
+        text = {
+            TextView(
+                text = text,
+                color = gray,
+                fontWeight = FontWeight.Normal,
+                fontSize = 14.sp
+            )
+        },
+        modifier = Modifier.fillMaxWidth(),
+        confirmButton = {
+            TextButton(onClick = { onConfirm() }) {
+                TextView(text = "Yes", color = gray)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { onDismiss() }) {
+                TextView(text = "No", color = primaryColor)
+            }
+        }
     )
 }

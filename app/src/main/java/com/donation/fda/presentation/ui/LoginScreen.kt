@@ -77,11 +77,42 @@ fun LoginViewScreen(navController: NavHostController) {
     val isPasswordEmpty by remember { derivedStateOf { password.isEmpty() } }
 
     val onClickLogin: () -> Unit = {
-        navController.navigate(NavScreen.DashboardPage.route){
-            popUpTo(NavScreen.LoginPage.route){
-                inclusive = true
+
+        when (email) {
+                "Donors" -> {
+                    // navigate the Donor dashboard
+                    navController.navigate(NavScreen.DonorDashboardPage.route) {
+                        popUpTo(NavScreen.LoginPage.route) {
+                            inclusive = true
+//                            val editor = sharedPreferences.edit()
+//                            editor.putString("accessToken", "${userLoginResult.data.result?.accessToken}").apply()
+                        }
+                    }
+                }
+
+                "Volunteers", "Farmers" -> {
+                    // navigate the Volunteer and Farmer dashboard
+                    // navigate the Donor dashboard
+                    navController.navigate(NavScreen.VolunteerDashboardPage.route) {
+                        popUpTo(NavScreen.LoginPage.route) {
+                            inclusive = true
+//                            val editor = sharedPreferences.edit()
+//                            editor.putString("accessToken", "${userLoginResult.data.result?.accessToken}").apply()
+                        }
+                    }
+                }
+
+                "NGOs" -> {
+                    // navigate the NGO dashboard
+                    navController.navigate(NavScreen.NgoDashboardPage.route) {
+                        popUpTo(NavScreen.LoginPage.route) {
+                            inclusive = true
+//                            val editor = sharedPreferences.edit()
+//                            editor.putString("accessToken", "${userLoginResult.data.result?.accessToken}").apply()
+                        }
+                    }
+                }
             }
-        }
 //            // call viewmodel function
 //        LogInViewModel.getLoginUserAuth(email, password)
 //        if (userLoginResult.data?.success == true) {

@@ -21,7 +21,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.donation.fda.presentation.ui.dashboard.donor.HistoryViewScreenDonor
 import com.donation.fda.presentation.ui.dashboard.donor.ProfileViewScreenDonor
-import com.donation.fda.presentation.ui.dashboard.donor.SettingViewScreenDonor
 import com.donation.fda.presentation.ui.navigations.BtnNavScreen
 import com.donation.fda.presentation.ui.navigations.volunteerPages
 import com.donation.fda.presentation.ui.util.TextView
@@ -34,7 +33,7 @@ import com.donation.fda.theme.white
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VolunteerBtnNavBarViewScreen() {
+fun VolunteerBtnNavBarViewScreen(navLoginController: NavHostController) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -88,29 +87,30 @@ fun VolunteerBtnNavBarViewScreen() {
             }
         }
     ) {
-        VolunteerNavHostScreen(navController)
+        VolunteerNavHostScreen(navController, navLoginController)
     }
 }
 
 @Composable
 fun VolunteerNavHostScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    navLoginController: NavHostController
 ) {
     NavHost(navController = navController, startDestination = BtnNavScreen.Home.route) {
         composable(BtnNavScreen.Home.route) {
             HomeViewScreenVolunteer(navController)
         }
         composable(BtnNavScreen.Pending.route) {
-            ProfileViewScreenDonor()
+//            ProfileViewScreenVolunteer()
         }
         composable(BtnNavScreen.History.route) {
-            HistoryViewScreenDonor()
+//            HistoryViewScreenVolunteer()
         }
         composable(BtnNavScreen.Profile.route) {
-            ProfileViewScreenDonor()
+//            ProfileViewScreenVolunteer()
         }
         composable(BtnNavScreen.Setting.route) {
-            SettingViewScreenDonor()
+//            SettingViewScreenVolunteer(navController, navLoginController)
         }
     }
 

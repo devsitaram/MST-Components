@@ -19,6 +19,10 @@ class ClientInterceptors(private val context: Context) : Interceptor {
         return chain.proceed(request)
     }
 
+    fun authToken(): String?{
+        return sharedPreferences.getString("accessToken", "")
+    }
+
     fun installApp(): String? {
         return sharedPreferences.getString("installToken", "")
     }

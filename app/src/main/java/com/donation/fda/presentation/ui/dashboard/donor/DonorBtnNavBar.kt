@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
@@ -49,7 +48,7 @@ import com.donation.fda.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DonorBtnNavBarViewScreen() {
+fun DonorBtnNavBarViewScreen(navLoginController: NavHostController) {
     val navController = rememberNavController()
     var isPostActive by remember { mutableStateOf(false) } // Remember the state
     Scaffold(
@@ -104,7 +103,7 @@ fun DonorBtnNavBarViewScreen() {
             }
         }
     ) {
-        DonorNavHostScreen(navController)
+        DonorNavHostScreen(navController, navLoginController)
     }
 }
 
@@ -126,7 +125,7 @@ fun BottomNav(navController: NavController, onClick: () -> Unit) {
                         VectorIconView(
                             vectorIcon = it,
                             contentDescription = "",
-                            modifier = Modifier.size(20.dp),
+                            modifier = Modifier,
                             tint = if (currentRoute?.hierarchy?.any { it.route == screen.route } == true) {
                                 primaryColor
                             } else {
@@ -140,7 +139,7 @@ fun BottomNav(navController: NavController, onClick: () -> Unit) {
                         TextView(
                             text = it,
                             fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold,
+                            fontWeight = FontWeight.Normal,
                             color = if (currentRoute?.hierarchy?.any { it.route == screen.route } == true) {
                                 primaryColor
                             } else {
@@ -168,7 +167,7 @@ fun BottomNav(navController: NavController, onClick: () -> Unit) {
 }
 
 @Composable
-fun DonorNavHostScreen(navController: NavHostController) {
+fun DonorNavHostScreen(navController: NavHostController, navLoginController: NavHostController) {
     NavHost(navController, startDestination = BtnNavScreen.Home.route) {
         //home
         composable(BtnNavScreen.Home.route) {
@@ -192,7 +191,7 @@ fun DonorNavHostScreen(navController: NavHostController) {
 
         //setting
         composable(BtnNavScreen.Setting.route) {
-            SettingViewScreenDonor()
+            SettingViewScreenDonor(navLoginController)
         }
     }
 }
@@ -225,15 +224,5 @@ fun HistoryViewScreenDonor() {
             .fillMaxSize(), contentAlignment = Alignment.Center
     ) {
         Text(text = "PickupScreen", color = Color.White)
-    }
-}
-
-@Composable
-fun SettingViewScreenDonor() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(), contentAlignment = Alignment.Center
-    ) {
-        Text(text = "SettingScreen", color = Color.White)
     }
 }

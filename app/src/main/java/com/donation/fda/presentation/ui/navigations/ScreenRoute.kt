@@ -20,8 +20,11 @@ sealed class NavScreen(val route: String) {
     object LoginPage: NavScreen("Login")
     object RegisterPage: NavScreen("Register")
     object ForgotPasswordPage: NavScreen("ForgotPassword")
-    object DashboardPage: NavScreen("Dashboard")
-    object Post: NavScreen("post")
+    object Post: NavScreen("Post")
+    object DonorDashboardPage: NavScreen("Donors")
+    object VolunteerDashboardPage: NavScreen("Volunteers")
+    object NgoDashboardPage: NavScreen("NGOs")
+
 }
 
 sealed class BtnNavScreen(val route: String, val title: String, val icon: ImageVector?) {
