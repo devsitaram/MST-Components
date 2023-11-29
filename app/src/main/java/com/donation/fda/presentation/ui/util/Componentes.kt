@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
@@ -348,7 +347,7 @@ fun PasswordTextFieldView(
                 onClick = { passwordVisibility.value = !passwordVisibility.value },
             ) {
                 VectorIconView(
-                    imageVector = if (passwordVisibility.value) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                    vectorIcon = if (passwordVisibility.value) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                     tint = if (isEmptyValue || isError) red else primaryColor
                 )
             }
@@ -455,13 +454,13 @@ fun AsyncImageView(
 @SuppressLint("ModifierParameter")
 @Composable
 fun VectorIconView(
-    imageVector: ImageVector,
+    vectorIcon: ImageVector,
     contentDescription: String? = null,
     modifier: Modifier = Modifier,
     tint: Color = Color.Unspecified
 ) {
     Icon(
-        imageVector = imageVector,
+        imageVector = vectorIcon,
         contentDescription = contentDescription,
         modifier = modifier,
         tint = tint
@@ -655,7 +654,7 @@ fun ButtonAppBar(
                     /**navController.navigate(ScreenList.SearchScreen.route)*/
                     /**navController.navigate(ScreenList.SearchScreen.route)*/
                     VectorIconView(
-                        imageVector = Icons.Default.Search,
+                        vectorIcon = Icons.Default.Search,
                         tint = Color.Gray,
                         modifier = Modifier
                             .size(30.dp)
@@ -908,7 +907,7 @@ fun TopButtonAppBar(title: String) {
                     // search icon
                     /**navController.navigate(ScreenList.SearchScreen.route)*/
                     VectorIconView(
-                        imageVector = Icons.Default.Search,
+                        vectorIcon = Icons.Default.Search,
                         tint = Color.Gray,
                         modifier = Modifier
                             .size(30.dp)

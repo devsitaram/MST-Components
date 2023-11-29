@@ -28,7 +28,6 @@ import com.donation.fda.presentation.ui.util.TextView
 import com.donation.fda.presentation.ui.util.VectorIconView
 import com.donation.fda.theme.backgroundLayoutColor
 import com.donation.fda.theme.gray
-import com.donation.fda.theme.pink
 import com.donation.fda.theme.primaryColor
 import com.donation.fda.theme.white
 
@@ -49,7 +48,7 @@ fun VolunteerBtnNavBarViewScreen() {
                             .background(color = white),
                         icon = {
                             screen.icon?.let {
-                                VectorIconView(imageVector = it,
+                                VectorIconView(vectorIcon = it,
                                     tint = if (currentDestination?.hierarchy?.any { it.route == screen.route } == true) {
                                         primaryColor // Change to your desired color
                                     } else {

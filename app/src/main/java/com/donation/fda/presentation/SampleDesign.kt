@@ -197,7 +197,7 @@ fun LoginViewScreen(userTypes: String?, navController: NavHostController) {
         InputTextFieldView(
             value = email,
             onValueChange = { email = it },
-            leadingIcon = { VectorIconView(imageVector = Icons.Default.PersonOutline) },
+            leadingIcon = { VectorIconView(vectorIcon = Icons.Default.PersonOutline) },
             label = "Email",
             placeholder = "Enter email",
             isEmptyValue = emailEmptyValue,
@@ -210,7 +210,7 @@ fun LoginViewScreen(userTypes: String?, navController: NavHostController) {
         PasswordTextFieldView(
             value = password,
             onValueChange = { password = it },
-            leadingIcon = { VectorIconView(imageVector = Icons.Default.LockOpen) },
+            leadingIcon = { VectorIconView(vectorIcon = Icons.Default.LockOpen) },
             label = "Password",
             placeholder = "Enter password",
             isEmptyValue = passwordEmptyValue,

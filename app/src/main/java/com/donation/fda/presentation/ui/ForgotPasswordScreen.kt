@@ -240,7 +240,7 @@ fun ForgotPasswordViewScreen(navController: NavHostController) {
                 PasswordTextFieldView(
                     value = newPassword,
                     onValueChange = { newPassword = it },
-                    leadingIcon = { VectorIconView(imageVector = Icons.Default.LockOpen) },
+                    leadingIcon = { VectorIconView(vectorIcon = Icons.Default.LockOpen) },
                     label = "New",
                     placeholder = "New password",
                     isEmptyValue = newPasswordEmptyValue,
@@ -252,7 +252,7 @@ fun ForgotPasswordViewScreen(navController: NavHostController) {
                 PasswordTextFieldView(
                     value = confirmPassword,
                     onValueChange = { confirmPassword = it },
-                    leadingIcon = { VectorIconView(imageVector = Icons.Default.LockOpen) },
+                    leadingIcon = { VectorIconView(vectorIcon = Icons.Default.LockOpen) },
                     label = "Confirm",
                     placeholder = "Confirm password",
                     isEmptyValue = confirmPasswordEmptyValue,

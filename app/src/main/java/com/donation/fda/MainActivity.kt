@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.donation.fda.data.common.ClientInterceptors
+import com.donation.fda.presentation.ui.dashboard.ngo.NgoBtnNavBarViewScreen
 import com.donation.fda.presentation.ui.dashboard.volunteer_farmer.VolunteerBtnNavBarViewScreen
 import com.donation.fda.theme.FDATheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    VolunteerBtnNavBarViewScreen()
+                    NgoBtnNavBarViewScreen()
 //                    val navController = rememberNavController()
 //                    NavigationViewScreen(getInstallDevice, navController)
                 }

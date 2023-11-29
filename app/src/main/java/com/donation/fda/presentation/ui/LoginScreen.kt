@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,7 +17,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.material3.ButtonDefaults
@@ -208,7 +206,7 @@ fun LoginViewScreen(navController: NavHostController) {
         InputTextFieldView(
             value = email,
             onValueChange = { email = it },
-            leadingIcon = { VectorIconView(imageVector = Icons.Default.PersonOutline) },
+            leadingIcon = { VectorIconView(vectorIcon = Icons.Default.PersonOutline) },
             label = "Email",
             placeholder = "Enter email",
             isEmptyValue = emailEmptyValue,
@@ -221,7 +219,7 @@ fun LoginViewScreen(navController: NavHostController) {
         PasswordTextFieldView(
             value = password,
             onValueChange = { password = it },
-            leadingIcon = { VectorIconView(imageVector = Icons.Default.LockOpen) },
+            leadingIcon = { VectorIconView(vectorIcon = Icons.Default.LockOpen) },
             label = "Password",
             placeholder = "Enter password",
             isEmptyValue = passwordEmptyValue,

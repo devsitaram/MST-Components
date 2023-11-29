@@ -21,7 +21,6 @@ sealed class NavScreen(val route: String) {
     object RegisterPage: NavScreen("Register")
     object ForgotPasswordPage: NavScreen("ForgotPassword")
     object DashboardPage: NavScreen("Dashboard")
-
     object Post: NavScreen("post")
 }
 
