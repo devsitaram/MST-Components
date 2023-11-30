@@ -196,17 +196,6 @@ fun DonorNavHostScreen(navController: NavHostController, navLoginController: Nav
     }
 }
 
-
-@Composable
-fun ProfileViewScreenDonor() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(), contentAlignment = Alignment.Center
-    ) {
-        Text(text = "ProfileScreen", color = Color.White)
-    }
-}
-
 @Composable
 fun PostViewScreenDonor() {
     Box(

@@ -29,7 +29,7 @@ fun HomeViewScreenDonor() {
         TopButtonAppBarView("Home")
         LazyColumn(
             content = {
-                items(30) {count ->
+                items(20) {count ->
                     Text(text = "$count HomeScreen", color = Color.Black)
                     Spacer(modifier = Modifier.padding(top = 8.dp))
                     Divider()

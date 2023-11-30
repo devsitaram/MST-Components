@@ -7,9 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
 import com.donation.fda.data.common.ClientInterceptors
-import com.donation.fda.presentation.ui.dashboard.donor.DonorBtnNavBarViewScreen
+import com.donation.fda.presentation.ui.dashboard.donor.ProfileViewScreenDonor
 import com.donation.fda.presentation.ui.navigations.NavigationViewScreen
 import com.donation.fda.theme.FDATheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,8 +34,8 @@ class MainActivity : ComponentActivity() {
 //                    DonorBtnNavBarViewScreen()
 //                    VolunteerBtnNavBarViewScreen()
 //                    NgoBtnNavBarViewScreen()
-
-                    NavigationViewScreen(getInstallDevice, authToken)
+                    ProfileViewScreenDonor()
+//                    NavigationViewScreen(getInstallDevice, authToken)
                 }
             }
         }

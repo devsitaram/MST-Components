@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_EXPRESSION")
+
 package com.donation.fda.presentation.ui.util
 
 import android.annotation.SuppressLint
@@ -38,6 +40,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.OfflineBolt
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -52,7 +55,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -99,6 +102,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.donation.fda.theme.backgroundLayoutColor
 import com.donation.fda.theme.black
 import com.donation.fda.theme.gray
 import com.donation.fda.theme.pink
@@ -976,6 +980,23 @@ fun TopButtonAppBarView(title: String) {
             .shadow(5.dp)
             .height(56.dp)
             .fillMaxWidth(),
+    )
+}
+
+@Composable
+fun TopAppBarView(
+    title: String? = null,
+    modifier: Modifier = Modifier,
+    navigationIcon: @Composable() (() -> Unit)? = null,
+    backgroundColor: Color = Color.Unspecified,
+    contentColor: Color = Color.Unspecified
+) {
+    TopAppBar(
+        title = { TextView(text = title.toString()) },
+        modifier = modifier,
+        navigationIcon = navigationIcon,
+        backgroundColor = backgroundColor,
+        contentColor = contentColor
     )
 }
 
