@@ -1,27 +1,17 @@
 package com.donation.fda.presentation.ui.dashboard.donor
 
-import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,26 +20,19 @@ import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cake
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.OfflineBolt
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.material.icons.filled.PhoneInTalk
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ShapeDefaults
@@ -65,32 +48,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.donation.fda.presentation.ui.RegisterView
-import com.donation.fda.presentation.ui.UserList
+import com.donation.fda.presentation.ui.util.AsyncImageView
 import com.donation.fda.presentation.ui.util.ButtonView
-import com.donation.fda.presentation.ui.util.CardView
-import com.donation.fda.presentation.ui.util.CircularImageView
-import com.donation.fda.presentation.ui.util.ImageViewPainter
 import com.donation.fda.presentation.ui.util.InputTextFieldView
+import com.donation.fda.presentation.ui.util.PainterImageView
 import com.donation.fda.presentation.ui.util.TextView
-import com.donation.fda.presentation.ui.util.TopAppBarView
-import com.donation.fda.presentation.ui.util.TopButtonAppBarView
+import com.donation.fda.presentation.ui.util.TopAppBarIconView
 import com.donation.fda.presentation.ui.util.VectorIconView
-import com.donation.fda.theme.PurpleGrey80
 import com.donation.fda.theme.backgroundLayoutColor
 import com.donation.fda.theme.black
-import com.donation.fda.theme.blue
 import com.donation.fda.theme.gray
 import com.donation.fda.theme.primaryColor
 import com.donation.fda.theme.red
-import com.donation.fda.theme.skyBlue
 import com.donation.fda.theme.white
 import com.record.fda.R
 import kotlinx.coroutines.launch
@@ -112,7 +88,7 @@ fun ProfileViewScreenDonor() {
         }
     }
 
-    var profileUrl by remember { mutableStateOf("") }
+    var profiles by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var adddress by remember { mutableStateOf("") }
@@ -143,7 +119,8 @@ fun ProfileViewScreenDonor() {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(10.dp),
+                            .padding(10.dp)
+                            .verticalScroll(rememberScrollState()),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row(
@@ -236,24 +213,26 @@ fun ProfileViewScreenDonor() {
                                     .padding(8.dp)
                             )
                             InputTextFieldView(
-                                    value = dob,
-                            onValueChange = { dob = it },
-                            leadingIcon = { VectorIconView(vectorIcon = Icons.Default.Cake) },
-                            label = "DOB",
-                            placeholder = "Enter date of birth",
-                            isEmptyValue = false,
-                            errorColor = red,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp)
+                                value = dob,
+                                onValueChange = { dob = it },
+                                leadingIcon = { VectorIconView(vectorIcon = Icons.Default.Cake) },
+                                label = "DOB",
+                                placeholder = "Enter date of birth",
+                                isEmptyValue = false,
+                                errorColor = red,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp)
                             )
                             InputTextFieldView(
                                 value = description,
                                 onValueChange = { description = it },
                                 leadingIcon = { VectorIconView(vectorIcon = Icons.Default.Description) },
                                 label = "About",
-                                placeholder = "Enter description",
+                                placeholder = "Enter about details",
                                 isEmptyValue = false,
+                                maxLines = 2,
+                                singleLine = false,
                                 errorColor = red,
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -279,9 +258,9 @@ fun ProfileViewScreenDonor() {
                                 ),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 10.dp, vertical = 10.dp)
+                                    .padding(horizontal = 10.dp, vertical = 15.dp)
                             )
-
+                            Spacer(modifier = Modifier.padding(bottom = 60.dp))
                         }
                     }
                 }
@@ -289,11 +268,26 @@ fun ProfileViewScreenDonor() {
         ) { innerPadding ->
             // this is the screen
             Column(modifier = Modifier.padding(innerPadding)) {
+                TopAppBarIconView(
+                    title = "Profile",
+                    modifier = Modifier.shadow(1.dp),
+                    backgroundColor = white,
+                    contentColor = black,
+                    navigationIcon = { PainterImageView(painter = painterResource(id = R.mipmap.img_app_logo)) },
+                    vectorIcon = Icons.Default.Edit,
+                    tint = gray
+                ) { onClickAction() }
                 // profile screen
                 DonorViewProfile(
-                    onClickAction = {
-                        onClickAction()
-                    }
+                    userId = "101",
+                    userName = "Sita Ram Thing",
+                    userEmail = "np01ma4s220003@islington.edu.np",
+                    userAddress = "Kathmandu, Nepal",
+                    userContactNo = "9700110011",
+                    userGender = "Male",
+                    userDOB = "18-02-2002",
+                    aboutsUser = null,
+                    profileUrl = "https://image.freepik.com/free-vector/young-volunteer-with-food-donation-donation-box-concept-illustrations-donation-box-donation-volunteers-concept-illustration-set-perfect-banner-mobile-app-landing-page_106796-289.jpg"
                 )
             }
         }
@@ -301,7 +295,17 @@ fun ProfileViewScreenDonor() {
 }
 
 @Composable
-fun DonorViewProfile(onClickAction: () -> Unit) {
+fun DonorViewProfile(
+    userId: String? = null,
+    userName: String? = null,
+    userEmail: String? = null,
+    userAddress: String? = null,
+    userContactNo: String? = null,
+    userGender: String? = null,
+    userDOB: String? = null,
+    aboutsUser: String? = null,
+    profileUrl: String? = null
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -311,13 +315,6 @@ fun DonorViewProfile(onClickAction: () -> Unit) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TopAppBarView(
-            title = "Profile",
-            modifier = Modifier,
-            backgroundColor = white,
-            contentColor = black
-        )
-
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
                 Column(
@@ -326,33 +323,22 @@ fun DonorViewProfile(onClickAction: () -> Unit) {
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                            IconButton(onClick = { onClickAction() }) {
-                                VectorIconView(vectorIcon = Icons.Default.Edit, tint = gray)
-                        }
-                    }
 
                     Card(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(top = 30.dp)
+                            .padding(top = 85.dp)
                             .clip(RoundedCornerShape(40.dp, 40.dp, 0.dp, 0.dp)),
                         colors = CardDefaults.cardColors(white)
                     ) {
                         Column(
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .fillMaxSize().background(white)
                                 .padding(vertical = 40.dp, horizontal = 8.dp),
                             verticalArrangement = Arrangement.Top,
                         ) {
                             TextView(
-                                text = "Sita Ram Thing",
+                                text = userName.toString(),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 color = black,
@@ -362,7 +348,7 @@ fun DonorViewProfile(onClickAction: () -> Unit) {
                                     .padding(top = 12.dp)
                             )
                             TextView(
-                                text = "Donor Id: 101",
+                                text = "Donor Id: $userId",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal,
                                 color = black,
@@ -386,30 +372,28 @@ fun DonorViewProfile(onClickAction: () -> Unit) {
                             UserProfiles(
                                 icon = Icons.Default.Email,
                                 title = "Email",
-                                data = "np01ma4s220003@islington.edu.np"
+                                data = userEmail
                             )
                             UserProfiles(
                                 icon = Icons.Default.LocationOn,
                                 title = "Address",
-                                data = "Kathmandu, Nepal"
+                                data = userAddress
                             )
                             UserProfiles(
                                 icon = Icons.Default.PhoneInTalk,
-                                title = "Phone number",
-                                data = "9700110011"
+                                title = "Contact number",
+                                data = userContactNo
                             )
                             UserProfiles(
                                 icon = Icons.Default.Person,
                                 title = "Gender",
-                                data = "Male"
+                                data = userGender
                             )
                             UserProfiles(
                                 icon = Icons.Default.Cake,
                                 title = "Date of Birth",
-                                data = null
+                                data = userDOB
                             )
-
-
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -427,9 +411,8 @@ fun DonorViewProfile(onClickAction: () -> Unit) {
                                         .fillMaxWidth()
                                 )
                                 Divider()
-                                val descriptions: String? = null
                                 TextView(
-                                    text = if (descriptions.isNullOrEmpty()) "Add more details to your profile" else descriptions.toString(),
+                                    text = if (aboutsUser.isNullOrEmpty()) "Add more details to your profile" else aboutsUser.toString(),
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Normal,
                                     color = black,
@@ -447,8 +430,9 @@ fun DonorViewProfile(onClickAction: () -> Unit) {
                     .padding(top = 35.dp),
                 contentAlignment = Alignment.TopCenter
             ) {
-                CircularImageView(
-                    painter = painterResource(id = R.mipmap.img_profile),
+                AsyncImageView(
+                    model = profileUrl.toString(),
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(100.dp)
                         .clip(CircleShape)

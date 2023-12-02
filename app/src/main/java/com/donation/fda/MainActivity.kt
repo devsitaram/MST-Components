@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.donation.fda.data.common.ClientInterceptors
+import com.donation.fda.presentation.ui.dashboard.donor.HistoryViewScreenDonor
 import com.donation.fda.presentation.ui.dashboard.donor.ProfileViewScreenDonor
 import com.donation.fda.presentation.ui.navigations.NavigationViewScreen
 import com.donation.fda.theme.FDATheme
@@ -33,9 +34,9 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    DonorBtnNavBarViewScreen()
 //                    VolunteerBtnNavBarViewScreen()
-//                    NgoBtnNavBarViewScreen()
-                    ProfileViewScreenDonor()
-//                    NavigationViewScreen(getInstallDevice, authToken)
+//                    HistoryViewScreenDonor()
+//                    ProfileViewScreenDonor()
+                    NavigationViewScreen(getInstallDevice, authToken)
                 }
             }
         }

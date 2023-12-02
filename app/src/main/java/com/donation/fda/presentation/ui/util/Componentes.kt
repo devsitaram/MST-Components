@@ -7,6 +7,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,13 +15,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.ClickableText
@@ -40,7 +43,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.OfflineBolt
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -56,6 +58,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.TextButton
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -108,6 +111,7 @@ import com.donation.fda.theme.gray
 import com.donation.fda.theme.pink
 import com.donation.fda.theme.primaryColor
 import com.donation.fda.theme.red
+import com.donation.fda.theme.skyBlue
 import com.donation.fda.theme.white
 import com.record.fda.R
 
@@ -627,7 +631,6 @@ fun ErrorMessageDialogBox(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ButtonAppBar(
     title: String,
@@ -714,91 +717,129 @@ fun ButtonAppBar(
     )
 }
 
-//@Composable
-//fun ContentCardView(
-//    imageUrl: String,
-//    topic: String,
-//    description: String,
-//    onClickable: () -> Unit
-//) {
-//    Card(
-//        modifier = Modifier
-//            .fillMaxWidth().wrapContentHeight()
-//            .padding(bottom = 15.dp)
-//            .border(1.dp, Color.LightGray)
-//            .clickable { onClickable() },
-//        shape = ShapeDefaults.Medium
-//    ) {
-//        Row(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .background(Color.White),
-//            horizontalArrangement = Arrangement.Center,
-//            verticalAlignment = Alignment.CenterVertically
-//        ) {
-//            AsyncImage(
-//                model = imageUrl,
-//                contentDescription = null,
-//                modifier = Modifier
-//                    .size(120.dp)
-//                    .padding(start = 15.dp, end = 15.dp)
-//            )
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .border(1.dp, Color.LightGray),
-//                verticalArrangement = Arrangement.Bottom
-//            ) {
-//                Column(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(15.dp)
-//                ) {
-//                    TextView(
-//                        text = topic, style = TextStyle(
-//                            fontSize = 15.sp,
-//                            fontWeight = FontWeight.Bold,
-//                        ),
-//                        modifier = Modifier
-//                    )
-//                    TextView(
-//                        text = description,
-//                        style = TextStyle(
-//                            fontSize = 14.sp,
-//                            fontWeight = FontWeight.Normal,
-//                            lineHeight = 20.sp,
-//                            color = Color.Gray
-//                        ),
-//                        modifier = Modifier.padding(top = 5.dp)
-//                    )
-//                }
-//                Spacer(modifier = Modifier.padding(top = 20.dp))
-//                Row(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .border(1.dp, Color.LightGray)
-//                        .padding(10.dp),
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    Icon(
-//                        imageVector = Icons.Default.Newspaper,
-//                        contentDescription = null,
-//                        tint = skyBlue,
-//                        modifier = Modifier.padding(start = 5.dp)
-//                    )
-//                    TextView(
-//                        text = "View Package Detail", style = TextStyle(
-//                            fontSize = 14.sp,
-//                            fontWeight = FontWeight.SemiBold,
-//                            color = skyBlue
-//                        ),
-//                        modifier = Modifier.padding(start = 5.dp)
-//                    )
-//                }
-//            }
-//        }
-//    }
-// }
+@Composable
+fun ContentCardView(
+    imageUrl: String,
+    topic: String,
+    donateLocation: String,
+    distributedLocation: String,
+    donationDate: String,
+    description: String,
+    onClickable: () -> Unit
+) {
+    Spacer(modifier = Modifier.padding(top = 8.dp))
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .border(1.dp, backgroundLayoutColor),
+        shape = ShapeDefaults.Medium
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onClickable() }
+                .background(white),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.wrapContentSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = null,
+                    modifier = Modifier.size(110.dp).padding(horizontal = 8.dp)
+                )
+
+                val rating = 5
+                val stars = buildString {
+                    repeat(rating) {
+                        append("⭐")
+                    }
+                }
+                Text(
+                    text = stars,
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Black
+                    ),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(1.dp, backgroundLayoutColor),
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    TextView(
+                        text = topic,
+                        style = TextStyle(
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = black
+                        ),
+                        modifier = Modifier
+                    )
+                    TextView(
+                        text = donateLocation,
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Normal,
+                            lineHeight = 20.sp,
+                            color = gray
+                        ),
+                        modifier = Modifier.padding(top = 5.dp)
+                    )
+                    TextView(
+                        text = donationDate,
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Normal,
+                            lineHeight = 25.sp,
+                            color = gray
+                        ),
+                        modifier = Modifier
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(1.dp, backgroundLayoutColor)
+                        .padding(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Newspaper,
+                        contentDescription = null,
+                        tint = primaryColor,
+                        modifier = Modifier.padding(start = 5.dp)
+                    )
+                    TextView(
+                        text = "View History Details",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = primaryColor
+                        ),
+                        modifier = Modifier.padding(start = 5.dp)
+                    )
+                }
+            }
+        }
+    }
+ }
 
 @Composable
 fun DividerWithText(text: String, modifier: Modifier = Modifier) {
@@ -821,7 +862,7 @@ fun ImageViewPainter(
 ) {
     Image(
         painter = painterImage,
-        contentDescription = null,
+        contentDescription = contentDescription,
         modifier = modifier
     )
 }
@@ -984,7 +1025,7 @@ fun TopButtonAppBarView(title: String) {
 }
 
 @Composable
-fun TopAppBarView(
+fun TopAppBarTextView(
     title: String? = null,
     modifier: Modifier = Modifier,
     navigationIcon: @Composable() (() -> Unit)? = null,
@@ -992,7 +1033,41 @@ fun TopAppBarView(
     contentColor: Color = Color.Unspecified
 ) {
     TopAppBar(
-        title = { TextView(text = title.toString()) },
+        title = {
+            TextView(text = title.toString())
+        },
+        modifier = modifier,
+        navigationIcon = navigationIcon,
+        backgroundColor = backgroundColor,
+        contentColor = contentColor
+    )
+}
+
+@Composable
+fun TopAppBarIconView(
+    title: String? = null,
+    modifier: Modifier = Modifier,
+    navigationIcon: @Composable() (() -> Unit)? = null,
+    backgroundColor: Color = Color.Unspecified,
+    contentColor: Color = Color.Unspecified,
+    vectorIcon: ImageVector,
+    tint: Color = Color.Unspecified,
+    onClickAction: () -> Unit
+) {
+    TopAppBar(
+        title = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                TextView(text = title.toString())
+                IconButton(onClick = { onClickAction() }) {
+                    VectorIconView(vectorIcon = vectorIcon, tint = tint)
+                }
+            }
+
+        },
         modifier = modifier,
         navigationIcon = navigationIcon,
         backgroundColor = backgroundColor,

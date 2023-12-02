@@ -205,13 +205,3 @@ fun PostViewScreenDonor() {
         Text(text = "CameraScreen", color = Color.White)
     }
 }
-
-@Composable
-fun HistoryViewScreenDonor() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(), contentAlignment = Alignment.Center
-    ) {
-        Text(text = "PickupScreen", color = Color.White)
-    }
-}
